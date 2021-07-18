@@ -164,31 +164,37 @@ void smart_manager(void)
     LV_SET_LOCAL_STYLE(text_color, label_slider_acb, LV_COLOR_WHITE);
 
     lv_obj_align(air_control_bar, main_box, LV_ALIGN_IN_TOP_LEFT, 30, 70);
+    FLT_obj_fade_in(air_control_bar, 20);
 
+    /* heating machine control bar */
     lv_obj_t *heating_control_bar = FLT_add_control_bar(main_box,
                                                         FLT_CONTROL_BAR_TYPE1_WIDTH(lv_obj_get_width(main_box)),
                                                         FTL_CONTROL_BAR_TYPE1_HEIGHT(lv_obj_get_height(main_box)));
     lv_obj_align(heating_control_bar, air_control_bar,
                  LV_ALIGN_OUT_BOTTOM_MID, 0, lv_obj_get_height(air_control_bar) / 3);
 
+    /* refrigerator machine control bar */
     lv_obj_t *refrigerator_control_bar = FLT_add_control_bar(main_box,
                                                              FLT_CONTROL_BAR_TYPE1_WIDTH(lv_obj_get_width(main_box)),
                                                              FTL_CONTROL_BAR_TYPE1_HEIGHT(lv_obj_get_height(main_box)));
     lv_obj_align(refrigerator_control_bar, heating_control_bar,
                  LV_ALIGN_OUT_BOTTOM_MID, 0, lv_obj_get_height(heating_control_bar) / 3);
 
+    /* washing machine control bar */
     lv_obj_t *washing_control_bar = FLT_add_control_bar(main_box,
                                                         lv_obj_get_width(main_box) / 2,
                                                         lv_obj_get_height(main_box) / 2);
     lv_obj_align(washing_control_bar, main_box,
                  LV_ALIGN_IN_TOP_RIGHT, -30, 70);
 
+    /* light control bar 1 */
     lv_obj_t *light_control_bar_1 = FLT_add_control_bar(main_box,
                                                         lv_obj_get_width(main_box) / 4.5,
                                                         lv_obj_get_height(main_box) / 5);
     lv_obj_align(light_control_bar_1, washing_control_bar,
                  LV_ALIGN_OUT_BOTTOM_LEFT, 0, lv_obj_get_height(heating_control_bar) / 4);
 
+    /* light control bar 2 */
     lv_obj_t *light_control_bar_2 = FLT_add_control_bar(main_box,
                                                         lv_obj_get_width(main_box) / 4.5,
                                                         lv_obj_get_height(main_box) / 5);

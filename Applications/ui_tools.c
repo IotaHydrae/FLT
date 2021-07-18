@@ -439,3 +439,39 @@ static void FLT_folder_content_close_ready_cb(lv_anim_t *a)
 {
 	lv_obj_del(a->var);
 }
+
+void FLT_obj_anim_in(lv_obj_t * obj, uint32_t delay)
+{
+	    if (obj != lv_scr_act()) {
+        lv_anim_t a;
+        lv_anim_init(&a);
+        lv_anim_set_var(&a, obj);
+        lv_anim_set_time(&a, FLT_ANIM_TIME);
+        lv_anim_set_delay(&a, delay);
+        lv_anim_set_exec_cb(&a, (lv_anim_exec_xcb_t) lv_obj_set_y);
+        lv_anim_set_values(&a, lv_obj_get_y(obj) + FLT_ANIM_Y,
+                lv_obj_get_y(obj));
+        lv_anim_start(&a);
+
+        lv_obj_fade_in(obj, FLT_FADE_IN_TIME, delay);
+    }
+}
+
+void FLT_obj_fade_in(lv_obj_t * obj, uint32_t delay)
+{
+	// lv_obj_set_pos(obj, lv_obj_get_x(obj), lv_obj_get_y(obj)-FLT_ANIM_Y);
+	    if (obj != lv_scr_act()) {
+        // lv_anim_t a;
+        // lv_anim_init(&a);
+        // lv_anim_set_var(&a, obj);
+        // lv_anim_set_time(&a, FLT_ANIM_TIME);
+        // lv_anim_set_delay(&a, delay);
+        // lv_anim_set_exec_cb(&a, (lv_anim_exec_xcb_t) lv_obj_set_y);
+        // lv_anim_set_values(&a, lv_obj_get_y(obj) + FLT_ANIM_Y,
+        //         lv_obj_get_y(obj));
+        // lv_anim_start(&a);
+
+        lv_obj_fade_in(obj, FLT_FADE_IN_TIME, delay);
+    }
+}
+
