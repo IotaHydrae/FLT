@@ -58,11 +58,15 @@ typedef struct
 static lv_ui ui;
 static lv_obj_t *tileview;
 static lv_obj_t *label_slider_acb;
+static lv_obj_t *label_slider_hcb;
+static lv_obj_t *label_slider_rcb;
 
 /*
     EVENT DECLEAR
 */
 LV_EVENT_CB_DECLARE(temp_slider_event_cb);
+LV_EVENT_CB_DECLARE(slider_heating_control_bar_event_handler);
+LV_EVENT_CB_DECLARE(slider_refrigerator_control_bar_event_handler);
 
 //-----------------------------------------------------------------------------
 //      @Function   :  __self_init
@@ -170,6 +174,26 @@ void smart_manager(void)
     lv_obj_t *heating_control_bar = FLT_add_control_bar(main_box,
                                                         FLT_CONTROL_BAR_TYPE1_WIDTH(lv_obj_get_width(main_box)),
                                                         FTL_CONTROL_BAR_TYPE1_HEIGHT(lv_obj_get_height(main_box)));
+    lv_obj_t *label_heating_control_bar = lv_label_create(heating_control_bar, NULL);
+    lv_label_set_text(label_heating_control_bar, "电加热器档位");
+    lv_obj_align(label_heating_control_bar, heating_control_bar,
+                 LV_ALIGN_IN_TOP_LEFT, 10, 10);
+    LV_SET_LOCAL_STYLE(text_color, label_heating_control_bar, LV_COLOR_WHITE);
+    LV_SET_LOCAL_STYLE(text_font, label_heating_control_bar, lv_theme_get_font_normal());
+
+    lv_obj_t *slider_heating_control_bar = FLT_add_slider(heating_control_bar, FLT_SLIDER_TYPE1);
+    lv_obj_set_event_cb(slider_heating_control_bar, slider_heating_control_bar_event_handler);
+    lv_obj_align(slider_heating_control_bar, heating_control_bar, LV_ALIGN_IN_BOTTOM_LEFT, 20, -10);
+    lv_slider_set_range(slider_heating_control_bar, 0, 2);
+    lv_slider_set_type(slider_heating_control_bar, LV_SLIDER_TYPE_NORMAL);
+    lv_slider_set_value(slider_heating_control_bar, 1, LV_ANIM_ON);   
+
+
+    label_slider_hcb = lv_label_create(heating_control_bar, label_slider_acb);
+    lv_obj_align(label_slider_hcb, heating_control_bar, LV_ALIGN_IN_TOP_RIGHT, -5, 5);
+    lv_label_set_text(label_slider_hcb, "中档");
+    LV_SET_LOCAL_STYLE(text_font, label_slider_hcb, lv_theme_get_font_normal());
+    LV_SET_LOCAL_STYLE(text_color, label_slider_hcb, LV_COLOR_WHITE);
     lv_obj_align(heating_control_bar, air_control_bar,
                  LV_ALIGN_OUT_BOTTOM_MID, 0, lv_obj_get_height(air_control_bar) / 3);
 
@@ -177,6 +201,28 @@ void smart_manager(void)
     lv_obj_t *refrigerator_control_bar = FLT_add_control_bar(main_box,
                                                              FLT_CONTROL_BAR_TYPE1_WIDTH(lv_obj_get_width(main_box)),
                                                              FTL_CONTROL_BAR_TYPE1_HEIGHT(lv_obj_get_height(main_box)));
+    //
+    lv_obj_t *label_refrigerator_control_bar = lv_label_create(refrigerator_control_bar, NULL);
+    lv_label_set_text(label_refrigerator_control_bar, "冰箱冷藏温度");
+    lv_obj_align(label_refrigerator_control_bar, refrigerator_control_bar,
+                 LV_ALIGN_IN_TOP_LEFT, 10, 10);
+    LV_SET_LOCAL_STYLE(text_color, label_refrigerator_control_bar, LV_COLOR_WHITE);
+    LV_SET_LOCAL_STYLE(text_font, label_refrigerator_control_bar, lv_theme_get_font_normal());
+
+    lv_obj_t *slider_refrigerator_control_bar = FLT_add_slider(refrigerator_control_bar, FLT_SLIDER_TYPE1);
+    lv_obj_set_event_cb(slider_refrigerator_control_bar, slider_refrigerator_control_bar_event_handler);
+    lv_obj_align(slider_refrigerator_control_bar, refrigerator_control_bar, LV_ALIGN_IN_BOTTOM_LEFT, 20, -10);
+    lv_slider_set_range(slider_refrigerator_control_bar, 0, 8);
+    lv_slider_set_type(slider_refrigerator_control_bar, LV_SLIDER_TYPE_NORMAL);
+    lv_slider_set_value(slider_refrigerator_control_bar, 1, LV_ANIM_ON);   
+
+
+    label_slider_rcb = lv_label_create(refrigerator_control_bar, NULL);
+    lv_obj_align(label_slider_rcb, refrigerator_control_bar, LV_ALIGN_IN_TOP_RIGHT, -5, 5);
+    lv_label_set_text(label_slider_rcb, "1C");
+    LV_SET_LOCAL_STYLE(text_font, label_slider_rcb, lv_theme_get_font_subtitle());
+    LV_SET_LOCAL_STYLE(text_color, label_slider_rcb, LV_COLOR_WHITE);
+    //                                                         
     lv_obj_align(refrigerator_control_bar, heating_control_bar,
                  LV_ALIGN_OUT_BOTTOM_MID, 0, lv_obj_get_height(heating_control_bar) / 3);
 
@@ -184,6 +230,12 @@ void smart_manager(void)
     lv_obj_t *washing_control_bar = FLT_add_control_bar(main_box,
                                                         lv_obj_get_width(main_box) / 2,
                                                         lv_obj_get_height(main_box) / 2);
+    /*
+        function roadmap 
+        1. a arch to control wash time
+        2. washing type drop box
+        3. function start up button  
+    */
     lv_obj_align(washing_control_bar, main_box,
                  LV_ALIGN_IN_TOP_RIGHT, -30, 70);
 
@@ -191,6 +243,10 @@ void smart_manager(void)
     lv_obj_t *light_control_bar_1 = FLT_add_control_bar(main_box,
                                                         lv_obj_get_width(main_box) / 4.5,
                                                         lv_obj_get_height(main_box) / 5);
+    /*
+        basic light 
+        1. light on/off control 
+    */
     lv_obj_align(light_control_bar_1, washing_control_bar,
                  LV_ALIGN_OUT_BOTTOM_LEFT, 0, lv_obj_get_height(heating_control_bar) / 4);
 
@@ -198,6 +254,11 @@ void smart_manager(void)
     lv_obj_t *light_control_bar_2 = FLT_add_control_bar(main_box,
                                                         lv_obj_get_width(main_box) / 4.5,
                                                         lv_obj_get_height(main_box) / 5);
+    /*
+        a more smarter light   
+        1. color tmep change 262k
+        2. light on/off control 
+    */
     lv_obj_align(light_control_bar_2, washing_control_bar,
                  LV_ALIGN_OUT_BOTTOM_RIGHT, 0, lv_obj_get_height(heating_control_bar) / 4);
 }
@@ -209,5 +270,42 @@ LV_EVENT_CB_DECLARE(temp_slider_event_cb)
     {
         snprintf(buf, 4, "%u", lv_slider_get_value(obj));
         lv_label_set_text_fmt(label_slider_acb, "%sC", buf);
+    }
+}
+
+LV_EVENT_CB_DECLARE(slider_heating_control_bar_event_handler)
+{
+    char buf[10];
+    int16_t slider_val = lv_slider_get_value(obj);
+
+
+    if (e == LV_EVENT_VALUE_CHANGED)
+    {
+        switch(slider_val){
+        default:
+            break;
+        case 0:
+            snprintf(buf, sizeof(buf), "%s", "低档");
+            lv_label_set_text_fmt(label_slider_hcb, "%s", buf);
+            break;
+        case 1:
+            snprintf(buf, sizeof(buf), "%s", "中档");
+            lv_label_set_text_fmt(label_slider_hcb, "%s", buf);
+            break;
+        case 2:
+            snprintf(buf, sizeof(buf), "%s", "高档");
+            lv_label_set_text_fmt(label_slider_hcb, "%s", buf);
+            break;
+        }
+    }  
+}
+
+LV_EVENT_CB_DECLARE(slider_refrigerator_control_bar_event_handler)
+{
+    char buf[4];
+    if (e == LV_EVENT_VALUE_CHANGED)
+    {
+        snprintf(buf, 4, "%u", lv_slider_get_value(obj));
+        lv_label_set_text_fmt(label_slider_rcb, "%sC", buf);
     }
 }

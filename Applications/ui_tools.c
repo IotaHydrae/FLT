@@ -35,6 +35,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //-----------------------------------------------------------------------------
+
+
 LV_EVENT_CB_DECLARE(mbox_event_handler);
 LV_EVENT_CB_DECLARE(obj_event_handler);
 LV_EVENT_CB_DECLARE(folder_content_event_handler);
@@ -59,6 +61,14 @@ LV_IMG_DECLARE(status_bar_wifi_off);
 static ptime_s ui_time = NULL;
 static uint32_t tic;
 
+//-----------------------------------------------------------------------------
+//      @Function   :  FLT_ui_tools_init
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  init tools ,styles and more.
+//-----------------------------------------------------------------------------
 void FLT_ui_tools_init(void)
 {
 	tic = lv_tick_get();
@@ -83,6 +93,14 @@ void FLT_ui_tools_init(void)
 	lv_style_set_shadow_width(&FLT_style_mbox, LV_STATE_DEFAULT, 80);
 }
 
+//-----------------------------------------------------------------------------
+//      @Function   :  FLT_show_statusbar
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  it shouldn't be like this, thinking modifly it to an single thread.
+//-----------------------------------------------------------------------------
 lv_obj_t *FLT_show_statusbar(lv_color_t color, uint8_t opa)
 {
 	FLT_get_time_now(ui_time);
@@ -119,6 +137,14 @@ lv_obj_t *FLT_show_statusbar(lv_color_t color, uint8_t opa)
 	return statusBar;
 }
 
+//-----------------------------------------------------------------------------
+//      @Function   :  FLT_update_statusBar
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  
+//-----------------------------------------------------------------------------
 void FLT_update_statusBar(lv_task_t *task)
 {
 	if (NULL == ui_time)
@@ -133,6 +159,14 @@ void FLT_update_statusBar(lv_task_t *task)
 	lv_img_set_src(wifi_icon, &status_bar_wifi);
 }
 
+//-----------------------------------------------------------------------------
+//      @Function   :  FLT_show_background
+//      @Description:  
+//      @Input      :  color
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  
+//-----------------------------------------------------------------------------
 void FLT_show_background(lv_color_t color)
 {
 	lv_obj_t *bg = lv_obj_create(lv_scr_act(), NULL);
@@ -145,6 +179,14 @@ void FLT_show_background(lv_color_t color)
 	lv_obj_set_size(bg, LV_HOR_RES, LV_VER_RES);
 }
 
+//-----------------------------------------------------------------------------
+//      @Function   :  set_icon_style
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  
+//-----------------------------------------------------------------------------
 static void set_icon_style(lv_obj_t *obj, lv_color_t color)
 {
 	static lv_style_t style;
@@ -179,6 +221,14 @@ static void set_icon_style(lv_obj_t *obj, lv_color_t color)
 	lv_obj_add_style(obj, LV_OBJ_PART_MAIN, &style);
 }
 
+//-----------------------------------------------------------------------------
+//      @Function   :  FLT_add_icon_lite
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  no pic no anything , just local style.
+//-----------------------------------------------------------------------------
 lv_obj_t *FLT_add_icon_lite(lv_obj_t *parent, lv_color_t bg_color, const char *txt)
 {
 	lv_obj_t *bg = lv_obj_create(parent, NULL);
@@ -198,6 +248,14 @@ lv_obj_t *FLT_add_icon_lite(lv_obj_t *parent, lv_color_t bg_color, const char *t
 	return bg;
 }
 
+//-----------------------------------------------------------------------------
+//      @Function   :  FLT_add_icon
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  
+//-----------------------------------------------------------------------------
 lv_obj_t *FLT_add_icon(lv_obj_t *parent, const void *src_img, const char *txt)
 {
 	lv_obj_t *bg = lv_img_create(parent, NULL);
@@ -219,6 +277,14 @@ lv_obj_t *FLT_add_icon(lv_obj_t *parent, const void *src_img, const char *txt)
 	return bg;
 }
 
+//-----------------------------------------------------------------------------
+//      @Function   :  FLT_add_control_bar
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  
+//-----------------------------------------------------------------------------
 lv_obj_t *FLT_add_control_bar(lv_obj_t *parent, lv_coord_t width, lv_coord_t height)
 {
 	lv_obj_t *control_bar = lv_obj_create(parent, NULL);
@@ -229,16 +295,14 @@ lv_obj_t *FLT_add_control_bar(lv_obj_t *parent, lv_coord_t width, lv_coord_t hei
 	return control_bar;
 }
 
-lv_obj_t *FLT_add_adver(lv_obj_t *parent)
-{
-	return 0;
-}
-
-/*lv_obj_t *FLT_add_folder(lv_obj_t* parent, lv_color_t bg_color)
-{
-	return 0;
-}*/
-
+//-----------------------------------------------------------------------------
+//      @Function   :  FLT_show_messagebox
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  maybe should auto closed and move it to status bar
+//-----------------------------------------------------------------------------
 void FLT_show_messagebox(char *text,
 						 const char **btns,
 						 uint16_t width, uint16_t height,
@@ -285,6 +349,7 @@ void FLT_show_messagebox(char *text,
 void FLT_show_folder_content(lv_obj_t *origin, char *folder_name,
 							 lv_task_cb_t event_cb)
 {
+	/* create folder object */
 	lv_obj_t *obj = lv_obj_create(lv_scr_act(), NULL);
 	lv_obj_reset_style_list(obj, LV_OBJ_PART_MAIN);
 	lv_obj_add_style(obj, LV_OBJ_PART_MAIN, &style_modal);
@@ -292,6 +357,7 @@ void FLT_show_folder_content(lv_obj_t *origin, char *folder_name,
 	lv_obj_set_size(obj, LV_HOR_RES, LV_VER_RES);
 	lv_obj_set_event_cb(obj, obj_event_handler);
 
+	/* get the start position of origin */
 	folder_start_x = lv_obj_get_x(origin);
 	folder_start_y = lv_obj_get_y(origin);
 
@@ -301,6 +367,7 @@ void FLT_show_folder_content(lv_obj_t *origin, char *folder_name,
 	lv_obj_add_style(folder_content, LV_OBJ_PART_MAIN, &FLT_style_mbox);
 	lv_obj_align(folder_content, obj, LV_ALIGN_CENTER, 0, 0);
 
+	/* animation of this folder , CTRL+CLICK see what's in it. */
 	FLT_anim_open_folder_content(folder_content, 0);
 
 	lv_obj_t *lbl_folder = lv_label_create(folder_content, NULL);
@@ -309,11 +376,11 @@ void FLT_show_folder_content(lv_obj_t *origin, char *folder_name,
 
 	lv_obj_t *tmp_folder_icon1 = lv_obj_get_child_back(origin, NULL);
 	lv_obj_t *folder_icon;
-	/*for each the list*/
+	/* Show each app in folder  */
 	for (int offset = 0; tmp_folder_icon1 != NULL; offset += 20)
 	{
 		/*pass current btn*/
-		printf("%d\n", lv_obj_get_height(tmp_folder_icon1));
+		// printf("%d\n", lv_obj_get_height(tmp_folder_icon1));
 		folder_icon = lv_img_create(folder_content, tmp_folder_icon1);
 		lv_img_set_zoom(folder_icon, 256);
 
@@ -325,11 +392,27 @@ void FLT_show_folder_content(lv_obj_t *origin, char *folder_name,
 	lv_obj_set_event_cb(folder_content, folder_content_event_handler);
 }
 
+//-----------------------------------------------------------------------------
+//      @Function   :  opa_anim
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  only used in this file .
+//-----------------------------------------------------------------------------
 static void opa_anim(void *bg, lv_anim_value_t v)
 {
 	LV_SET_LOCAL_STYLE(bg_opa, bg, v);
 }
 
+//-----------------------------------------------------------------------------
+//      @Function   :  obj_event_handler
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  
+//-----------------------------------------------------------------------------
 LV_EVENT_CB_DECLARE(obj_event_handler)
 {
 	if (e == LV_EVENT_CLICKED)
@@ -388,6 +471,14 @@ LV_EVENT_CB_DECLARE(folder_content_event_handler)
 	}
 }
 
+//-----------------------------------------------------------------------------
+//      @Function   :  FLT_anim_open_folder_content
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  
+//-----------------------------------------------------------------------------
 static void FLT_anim_open_folder_content(lv_obj_t *folder, uint32_t delay)
 {
 	lv_anim_t a;
@@ -411,6 +502,14 @@ static void FLT_anim_open_folder_content(lv_obj_t *folder, uint32_t delay)
 	lv_anim_start(&a);
 }
 
+//-----------------------------------------------------------------------------
+//      @Function   :  FLT_anim_close_folder_content
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  
+//-----------------------------------------------------------------------------
 static void FLT_anim_close_folder_content(lv_obj_t *folder, uint32_t delay)
 {
 	lv_anim_t a;
@@ -435,11 +534,27 @@ static void FLT_anim_close_folder_content(lv_obj_t *folder, uint32_t delay)
 	lv_anim_start(&a);
 }
 
+//-----------------------------------------------------------------------------
+//      @Function   :  FLT_folder_content_close_ready_cb
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  
+//-----------------------------------------------------------------------------
 static void FLT_folder_content_close_ready_cb(lv_anim_t *a)
 {
 	lv_obj_del(a->var);
 }
 
+//-----------------------------------------------------------------------------
+//      @Function   :  FLT_obj_anim_in
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  
+//-----------------------------------------------------------------------------
 void FLT_obj_anim_in(lv_obj_t * obj, uint32_t delay)
 {
 	    if (obj != lv_scr_act()) {
@@ -457,21 +572,49 @@ void FLT_obj_anim_in(lv_obj_t * obj, uint32_t delay)
     }
 }
 
+//-----------------------------------------------------------------------------
+//      @Function   :  FLT_obj_fade_in
+//      @Description:  fade in the obj except the screen
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  
+//-----------------------------------------------------------------------------
 void FLT_obj_fade_in(lv_obj_t * obj, uint32_t delay)
 {
-	// lv_obj_set_pos(obj, lv_obj_get_x(obj), lv_obj_get_y(obj)-FLT_ANIM_Y);
-	    if (obj != lv_scr_act()) {
-        // lv_anim_t a;
-        // lv_anim_init(&a);
-        // lv_anim_set_var(&a, obj);
-        // lv_anim_set_time(&a, FLT_ANIM_TIME);
-        // lv_anim_set_delay(&a, delay);
-        // lv_anim_set_exec_cb(&a, (lv_anim_exec_xcb_t) lv_obj_set_y);
-        // lv_anim_set_values(&a, lv_obj_get_y(obj) + FLT_ANIM_Y,
-        //         lv_obj_get_y(obj));
-        // lv_anim_start(&a);
-
+	if (obj != lv_scr_act()) {
         lv_obj_fade_in(obj, FLT_FADE_IN_TIME, delay);
     }
 }
 
+//-----------------------------------------------------------------------------
+//      @Function   :  FLT_obj_fade_out
+//      @Description:  fade out the obj except the screen
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  
+//-----------------------------------------------------------------------------
+void FLT_obj_fade_out(lv_obj_t *obj, uint32_t delay)
+{
+	if(obj != lv_scr_act()){
+		lv_obj_fade_out(obj, FLT_FADE_OUT_TIME, delay);
+	}
+}
+
+//-----------------------------------------------------------------------------
+//      @Function   :  FLT_add_slider
+//      @Description:  add slider to widget , should modfily it value and range outside.
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  
+//-----------------------------------------------------------------------------
+lv_obj_t *FLT_add_slider(lv_obj_t *parent, uint8_t slider_type)
+{
+    lv_obj_t *slider = lv_slider_create(parent, NULL);
+    lv_theme_apply(slider, (lv_theme_style_t)FLT_THEME_SILDER);
+    lv_obj_set_size(slider, lv_obj_get_width(parent) / 1.4, lv_obj_get_height(parent) / 2.5);
+
+	return slider;
+}

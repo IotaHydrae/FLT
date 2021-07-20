@@ -15,10 +15,26 @@ typedef enum
 #define FTL_CONTROL_BAR_TYPE1_HEIGHT(h) (h / 5)
 } FLT_CONTROL_BAR_TYPE1;
 
+typedef enum{	
+	#define FLT_SLIDER_TYPE1_LENGTH 
+	#define FLT_SLIDER_TYPE2_LENGTH 
+	#define FLT_SLIDER_TYPE3_LENGTH 
+
+	FLT_SLIDER_TYPE1=1,
+	FLT_SLIDER_TYPE2,
+	FLT_SLIDER_TYPE3
+}FLT_SLIDER_TYPE;
+
 
 #define FLT_ANIM_Y (lv_disp_get_ver_res(lv_disp_get_default()) / 20)
 #define FLT_ANIM_TIME (150)
-#define FLT_FADE_IN_TIME (100)
+
+/*
+	About Fade
+*/
+#define FLT_FADE_IN_TIME  (100)
+#define FLT_FADE_OUT_TIME (100)
+
 #define ICON_WIDTH_HEIGHT (100)
 #define PAD_ICON (LV_VER_RES_MAX / 20)
 #define PAD_STATUS_BAR (LV_VER_RES_MAX / 12)
@@ -42,4 +58,5 @@ void FLT_show_folder_content(lv_obj_t *self, char *folder_name,
 							 lv_task_cb_t event_cb);
 void FLT_obj_anim_in(lv_obj_t * obj, uint32_t delay);
 void FLT_obj_fade_in(lv_obj_t * obj, uint32_t delay);
+lv_obj_t *FLT_add_slider(lv_obj_t *parent, uint8_t slider_type);
 #endif

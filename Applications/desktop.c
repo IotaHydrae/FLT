@@ -309,6 +309,8 @@ static void adver_pos0_update(lv_task_t *task){
 	printf("%d,%d\n", adver_pos0_index,lv_tick_get());
 	//lv_obj_t *btn = lv_obj_get_child_back(tile2, NULL);
 	lv_img_set_src(img_ad_pos0, adver_pos0[adver_pos0_index].img_data);
+	// lv_obj_fade_in(img_ad_pos0, 300, 20);
+	FLT_obj_fade_in(img_ad_pos0, 20);
 	lv_label_set_text(label_ad1_pos0, adver_pos0[adver_pos0_index].text);
 	LV_SET_LOCAL_STYLE(text_color, label_ad1_pos0, lv_color_hex(adver_pos0[adver_pos0_index].text_color));
 	switch(adver_pos0[adver_pos0_index].text_size){
@@ -373,6 +375,8 @@ static void adver_pos1_update(lv_task_t *task){
 	printf("%d,%d\n", adver_pos1_index,lv_tick_get());
 	//lv_obj_t *btn = lv_obj_get_child_back(tile2, NULL);
 	lv_img_set_src(img_ad_pos1, adver_pos1[adver_pos1_index].img_data);
+	// lv_obj_fade_in(img_ad_pos1, 300, 20);
+	FLT_obj_fade_in(img_ad_pos1, 20);
 	lv_label_set_text(label_ad1_pos1, adver_pos1[adver_pos1_index].text);
 	LV_SET_LOCAL_STYLE(text_color, label_ad1_pos1, lv_color_hex(adver_pos1[adver_pos1_index].text_color));
 	switch(adver_pos1[adver_pos1_index].text_size){
@@ -547,15 +551,31 @@ static void hello(void)
 /**********************
 ** EVENT_CALL_BACK
 ***********************/
+//-----------------------------------------------------------------------------
+//      @Function   :  
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  
+//-----------------------------------------------------------------------------
 LV_EVENT_CB_DECLARE(icon1_event_handler)
 {
 		if (e == LV_EVENT_CLICKED){
-		FLT_taskkill(task_update_statusbar);
 
 		printf("%s, %d, launching Smart Home Center.\n", __func__,lv_tick_get());
 		smart_manager();
 	}
 }
+
+//-----------------------------------------------------------------------------
+//      @Function   :  
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  
+//-----------------------------------------------------------------------------
 LV_EVENT_CB_DECLARE(icon2_event_handler)
 {
 		if (e == LV_EVENT_CLICKED){
@@ -563,6 +583,15 @@ LV_EVENT_CB_DECLARE(icon2_event_handler)
 		music_player();
 	}
 }
+
+//-----------------------------------------------------------------------------
+//      @Function   :  
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  
+//-----------------------------------------------------------------------------
 LV_EVENT_CB_DECLARE(icon3_event_handler)
 {
 		if (e == LV_EVENT_CLICKED){
@@ -570,6 +599,15 @@ LV_EVENT_CB_DECLARE(icon3_event_handler)
 		read_center();
 	}
 }
+
+//-----------------------------------------------------------------------------
+//      @Function   :  
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  
+//-----------------------------------------------------------------------------
 LV_EVENT_CB_DECLARE(icon4_event_handler)
 {
 		if (e == LV_EVENT_CLICKED){
@@ -577,6 +615,15 @@ LV_EVENT_CB_DECLARE(icon4_event_handler)
 		movie_player();
 	}
 }
+
+//-----------------------------------------------------------------------------
+//      @Function   :  folder_event_handler
+//      @Description:  handler the event
+//      @Input      :  obj, event
+//      @Output     :  nothing
+//      @Returns    :  nothing
+//      @Others     :  Call the clock app in this demo 
+//-----------------------------------------------------------------------------
 LV_EVENT_CB_DECLARE(icon5_event_handler)
 {
 		if (e == LV_EVENT_CLICKED){
@@ -585,6 +632,15 @@ LV_EVENT_CB_DECLARE(icon5_event_handler)
 	}
 }
 
+
+//-----------------------------------------------------------------------------
+//      @Function   :  folder_event_handler
+//      @Description:  handler the event
+//      @Input      :  obj, event
+//      @Output     :  nothing
+//      @Returns    :  nothing
+//      @Others     :  
+//-----------------------------------------------------------------------------
 LV_EVENT_CB_DECLARE(folder_event_handler)
 {
 		static const char *btns[] = {"Ok", "Cancel", ""};
@@ -595,8 +651,14 @@ LV_EVENT_CB_DECLARE(folder_event_handler)
 	}
 }
 
-
-
+//-----------------------------------------------------------------------------
+//      @Function   :  btn_ad_pos2_event_handler
+//      @Description:  handler the event
+//      @Input      :  obj, event
+//      @Output     :  nothing
+//      @Returns    :  nothing
+//      @Others     :  
+//-----------------------------------------------------------------------------
 LV_EVENT_CB_DECLARE(btn_ad_pos0_event_handler)
 {
 	// int res;
@@ -610,6 +672,14 @@ LV_EVENT_CB_DECLARE(btn_ad_pos0_event_handler)
 	}
 }
 
+//-----------------------------------------------------------------------------
+//      @Function   :  btn_ad_pos1_event_handler
+//      @Description:  handler the event
+//      @Input      :  obj, event
+//      @Output     :  nothing
+//      @Returns    :  nothing
+//      @Others     :  
+//-----------------------------------------------------------------------------
 LV_EVENT_CB_DECLARE(btn_ad_pos1_event_handler)
 {
 	switch (e){
