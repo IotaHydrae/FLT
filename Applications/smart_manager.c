@@ -186,8 +186,7 @@ void smart_manager(void)
     lv_obj_align(slider_heating_control_bar, heating_control_bar, LV_ALIGN_IN_BOTTOM_LEFT, 20, -10);
     lv_slider_set_range(slider_heating_control_bar, 0, 2);
     lv_slider_set_type(slider_heating_control_bar, LV_SLIDER_TYPE_NORMAL);
-    lv_slider_set_value(slider_heating_control_bar, 1, LV_ANIM_ON);   
-
+    lv_slider_set_value(slider_heating_control_bar, 1, LV_ANIM_ON);
 
     label_slider_hcb = lv_label_create(heating_control_bar, label_slider_acb);
     lv_obj_align(label_slider_hcb, heating_control_bar, LV_ALIGN_IN_TOP_RIGHT, -5, 5);
@@ -214,15 +213,14 @@ void smart_manager(void)
     lv_obj_align(slider_refrigerator_control_bar, refrigerator_control_bar, LV_ALIGN_IN_BOTTOM_LEFT, 20, -10);
     lv_slider_set_range(slider_refrigerator_control_bar, 0, 8);
     lv_slider_set_type(slider_refrigerator_control_bar, LV_SLIDER_TYPE_NORMAL);
-    lv_slider_set_value(slider_refrigerator_control_bar, 1, LV_ANIM_ON);   
-
+    lv_slider_set_value(slider_refrigerator_control_bar, 1, LV_ANIM_ON);
 
     label_slider_rcb = lv_label_create(refrigerator_control_bar, NULL);
     lv_obj_align(label_slider_rcb, refrigerator_control_bar, LV_ALIGN_IN_TOP_RIGHT, -5, 5);
     lv_label_set_text(label_slider_rcb, "1C");
     LV_SET_LOCAL_STYLE(text_font, label_slider_rcb, lv_theme_get_font_subtitle());
     LV_SET_LOCAL_STYLE(text_color, label_slider_rcb, LV_COLOR_WHITE);
-    //                                                         
+    //
     lv_obj_align(refrigerator_control_bar, heating_control_bar,
                  LV_ALIGN_OUT_BOTTOM_MID, 0, lv_obj_get_height(heating_control_bar) / 3);
 
@@ -247,8 +245,22 @@ void smart_manager(void)
         basic light 
         1. light on/off control 
     */
+    /* create a switch with self-theme */
+    lv_obj_t *switch_light_control_bar_1 = lv_switch_create(light_control_bar_1, NULL);
+    lv_theme_apply(switch_light_control_bar_1, (lv_theme_style_t)FLT_THEME_SWITCH);
+    lv_obj_set_size(switch_light_control_bar_1, 
+                    lv_obj_get_width(light_control_bar_1)/1.5,
+                    lv_obj_get_height(light_control_bar_1)/2);
+    lv_obj_align(switch_light_control_bar_1, light_control_bar_1, LV_ALIGN_CENTER, 0, 0);
+
+    lv_obj_t *label_light_control_bar_1 = lv_label_create(lv_scr_act(), NULL);
+    lv_label_set_text(label_light_control_bar_1, "廊\n灯");
+    LV_SET_LOCAL_STYLE(text_color, label_light_control_bar_1, LV_COLOR_WHITE);
+    LV_SET_LOCAL_STYLE(text_font, label_light_control_bar_1, lv_theme_get_font_subtitle());
+
     lv_obj_align(light_control_bar_1, washing_control_bar,
                  LV_ALIGN_OUT_BOTTOM_LEFT, 0, lv_obj_get_height(heating_control_bar) / 4);
+    lv_obj_align(label_light_control_bar_1, light_control_bar_1, LV_ALIGN_OUT_LEFT_MID, -5, 0);
 
     /* light control bar 2 */
     lv_obj_t *light_control_bar_2 = FLT_add_control_bar(main_box,
@@ -278,10 +290,10 @@ LV_EVENT_CB_DECLARE(slider_heating_control_bar_event_handler)
     char buf[10];
     int16_t slider_val = lv_slider_get_value(obj);
 
-
     if (e == LV_EVENT_VALUE_CHANGED)
     {
-        switch(slider_val){
+        switch (slider_val)
+        {
         default:
             break;
         case 0:
@@ -297,7 +309,7 @@ LV_EVENT_CB_DECLARE(slider_heating_control_bar_event_handler)
             lv_label_set_text_fmt(label_slider_hcb, "%s", buf);
             break;
         }
-    }  
+    }
 }
 
 LV_EVENT_CB_DECLARE(slider_refrigerator_control_bar_event_handler)

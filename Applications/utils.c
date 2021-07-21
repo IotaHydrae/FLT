@@ -50,15 +50,6 @@ void FLT_get_time_elapsed(ptime_s time)
     }
 }
 
-inline void FLT_taskkill(lv_task_t *task)
-{
-    lv_task_del(task);
-}
-
-inline void FLT_taskkill_all(void)
-{
-}
-
 single_node *FLT_create_list_node(int data)
 {
     single_node *node = NULL;

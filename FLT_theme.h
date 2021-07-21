@@ -26,6 +26,9 @@ extern "C" {
 
 #define FLT_COLOR_THEME_DARK_IRON_GRAY lv_color_make(38, 36, 38)
 #define FLT_COLOR_THEME_DARK_GRAY lv_color_make(179, 178, 175)
+#define FLT_COLOR_GREEN lv_color_make(76, 178, 66)
+#define FLT_COLOR_BLUE lv_color_make(0, 122, 204)
+#define FLT_COLOR_ORANGE lv_color_make(255, 152, 0)
     
 /**********************
 *      TYPEDEFS
@@ -35,7 +38,8 @@ typedef enum {
     FLT_THEME_BTN,
     FLT_THEME_BOX,
     FLT_THEME_LABEL_TITLE,
-    FLT_THEME_SILDER
+    FLT_THEME_SILDER,
+    FLT_THEME_SWITCH
 }FLT_theme_t;
 
 /**********************

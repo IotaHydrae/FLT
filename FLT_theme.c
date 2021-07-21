@@ -60,9 +60,12 @@ static lv_style_t flt_dark_theme_style_box;
 static lv_style_t flt_dark_theme_style_btn;
 static lv_style_t flt_dark_theme_style_icon;
 static lv_style_t flt_dark_theme_style_label_tile;
-static lv_style_t flt_dark_theme_style_sw_bg;
 static lv_style_t flt_dark_theme_style_slider;
 static lv_style_t flt_dark_theme_style_slider_knob;
+static lv_style_t flt_dark_theme_style_sw_bg;
+static lv_style_t flt_dark_theme_style_sw_knob;
+static lv_style_t flt_dark_theme_style_sw_indic;
+static lv_style_t flt_dark_theme_style_switch;
 
 
 /**********************
@@ -116,11 +119,6 @@ static void basic_init(void)
     lv_style_init(&flt_dark_theme_style_label_tile);
     lv_style_set_text_color(&flt_dark_theme_style_label_tile, LV_STATE_DEFAULT, LV_COLOR_SILVER);
 
-    lv_style_init(&flt_dark_theme_style_sw_bg);
-    lv_style_set_bg_opa(&flt_dark_theme_style_sw_bg, LV_STATE_DEFAULT, LV_OPA_COVER);
-    lv_style_set_bg_color(&flt_dark_theme_style_sw_bg, LV_STATE_DEFAULT, LV_COLOR_AQUA);
-    lv_style_set_value_color(&flt_dark_theme_style_sw_bg, LV_STATE_DEFAULT, LV_COLOR_AQUA);
-
     lv_style_init(&flt_dark_theme_style_slider_knob);
     lv_style_set_bg_opa(&flt_dark_theme_style_slider_knob, LV_STATE_DEFAULT, LV_OPA_COVER);
     lv_style_set_bg_color(&flt_dark_theme_style_slider_knob, LV_STATE_DEFAULT, LV_COLOR_SILVER);
@@ -128,6 +126,7 @@ static void basic_init(void)
     lv_style_set_radius(&flt_dark_theme_style_slider_knob, LV_STATE_DEFAULT, 5);
     lv_style_set_border_color(&flt_dark_theme_style_slider_knob, LV_STATE_DEFAULT, LV_COLOR_SILVER);
     lv_style_set_border_width(&flt_dark_theme_style_slider_knob, LV_STATE_DEFAULT, 3);
+    lv_style_set_pad_all(&flt_dark_theme_style_slider_knob, LV_STATE_DEFAULT, 3);
 
 
     lv_style_init(&flt_dark_theme_style_slider);
@@ -152,6 +151,23 @@ static void basic_init(void)
     lv_style_set_transition_prop_3(&flt_dark_theme_style_slider, LV_STATE_DEFAULT, LV_STYLE_PAD_LEFT);
     lv_style_set_transition_prop_4(&flt_dark_theme_style_slider, LV_STATE_DEFAULT, LV_STYLE_PAD_RIGHT);
     
+    lv_style_init(&flt_dark_theme_style_sw_bg);
+    lv_style_set_bg_opa(&flt_dark_theme_style_sw_bg, LV_STATE_DEFAULT, LV_OPA_COVER);
+    lv_style_set_bg_color(&flt_dark_theme_style_sw_bg, LV_STATE_DEFAULT, LV_COLOR_AQUA);
+    lv_style_set_value_color(&flt_dark_theme_style_sw_bg, LV_STATE_DEFAULT, LV_COLOR_AQUA);
+
+    lv_style_init(&flt_dark_theme_style_sw_indic);
+    lv_style_set_bg_opa(&flt_dark_theme_style_sw_indic, LV_STATE_DEFAULT, LV_OPA_COVER);
+    lv_style_set_bg_color(&flt_dark_theme_style_sw_indic, LV_STATE_DEFAULT, FLT_COLOR_ORANGE);
+    lv_style_set_border_color(&flt_dark_theme_style_sw_indic, LV_STATE_DEFAULT, LV_COLOR_SILVER);
+    lv_style_set_border_width(&flt_dark_theme_style_sw_indic, LV_STATE_DEFAULT, 2);
+
+    lv_style_init(&flt_dark_theme_style_switch);
+    lv_style_set_bg_opa(&flt_dark_theme_style_switch, LV_STATE_DEFAULT, LV_OPA_COVER);
+    lv_style_set_bg_color(&flt_dark_theme_style_switch, LV_STATE_DEFAULT, LV_COLOR_WHITE);
+    lv_style_set_border_color(&flt_dark_theme_style_switch, LV_STATE_DEFAULT, LV_COLOR_SILVER);
+    lv_style_set_border_width(&flt_dark_theme_style_switch, LV_STATE_DEFAULT, 3);
+    lv_style_set_radius(&flt_dark_theme_style_switch, LV_STATE_DEFAULT, 5);
 }
 
 
@@ -233,6 +249,23 @@ static void dark_theme_apply(lv_obj_t* obj, lv_theme_style_t name)
             list = lv_obj_get_style_list(obj, LV_OBJ_PART_MAIN);
             _lv_style_list_add_style(list, &flt_dark_theme_style_slider);
             break;
+
+        case FLT_THEME_SWITCH:
+            lv_obj_clean_style_list(obj, LV_SWITCH_PART_BG);
+            list = lv_obj_get_style_list(obj, LV_SWITCH_PART_BG);
+            _lv_style_list_add_style(list, &flt_dark_theme_style_sw_bg);
+
+            lv_obj_clean_style_list(obj, LV_SWITCH_PART_KNOB);
+            list = lv_obj_get_style_list(obj, LV_SWITCH_PART_KNOB);
+            _lv_style_list_add_style(list, &flt_dark_theme_style_slider_knob);
+
+            lv_obj_clean_style_list(obj, LV_SWITCH_PART_INDIC);
+            list = lv_obj_get_style_list(obj, LV_SWITCH_PART_INDIC);
+            _lv_style_list_add_style(list, &flt_dark_theme_style_sw_indic);
+
+            lv_obj_clean_style_list(obj, LV_OBJ_PART_MAIN);
+            list = lv_obj_get_style_list(obj, LV_OBJ_PART_MAIN);
+            _lv_style_list_add_style(list, &flt_dark_theme_style_switch);
 
 
         default:

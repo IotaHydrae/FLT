@@ -9,10 +9,13 @@
 /*********************
  * Defines
  * ********************/
-typedef enum
-{
 #define FLT_CONTROL_BAR_TYPE1_WIDTH(w) (w / 3)
 #define FTL_CONTROL_BAR_TYPE1_HEIGHT(h) (h / 5)
+typedef enum
+{
+	FLT_CONTROL_BAR_TYPE1_LENGTH,
+
+
 } FLT_CONTROL_BAR_TYPE1;
 
 typedef enum{	
