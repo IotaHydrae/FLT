@@ -275,6 +275,14 @@ void smart_manager(void)
                  LV_ALIGN_OUT_BOTTOM_RIGHT, 0, lv_obj_get_height(heating_control_bar) / 4);
 }
 
+//-----------------------------------------------------------------------------
+//      @Function   :  
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  
+//-----------------------------------------------------------------------------
 LV_EVENT_CB_DECLARE(temp_slider_event_cb)
 {
     char buf[4];
@@ -285,6 +293,14 @@ LV_EVENT_CB_DECLARE(temp_slider_event_cb)
     }
 }
 
+//-----------------------------------------------------------------------------
+//      @Function   :  
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  
+//-----------------------------------------------------------------------------
 LV_EVENT_CB_DECLARE(slider_heating_control_bar_event_handler)
 {
     char buf[10];
@@ -312,6 +328,14 @@ LV_EVENT_CB_DECLARE(slider_heating_control_bar_event_handler)
     }
 }
 
+//-----------------------------------------------------------------------------
+//      @Function   :  
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  
+//-----------------------------------------------------------------------------
 LV_EVENT_CB_DECLARE(slider_refrigerator_control_bar_event_handler)
 {
     char buf[4];

@@ -76,10 +76,14 @@ static lv_style_t flt_dark_theme_style_switch;
 *   STATIC FUNCTIONS
 **********************/
 
-/**
- * @brief initialize all style
- * @param
-*/
+//-----------------------------------------------------------------------------
+//      @Function   :  
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  
+//-----------------------------------------------------------------------------
 static void basic_init(void)
 {
     lv_style_init(&flt_dark_theme_style_icon);
@@ -201,6 +205,14 @@ lv_theme_t* FLT_theme_init(lv_color_t color_primary, lv_color_t color_secondary,
     return &theme;
 }
 
+//-----------------------------------------------------------------------------
+//      @Function   :  
+//      @Description:  
+//      @Input      :  
+//      @Output     :  
+//      @Returns    :  
+//      @Others     :  
+//-----------------------------------------------------------------------------
 static void dark_theme_apply(lv_obj_t* obj, lv_theme_style_t name)
 {
     lv_style_list_t * list;
